@@ -24,23 +24,25 @@ const JobDetail = ({ jobs, onBookmark }) => {
   // Load job details based on job ID
   useEffect(() => {
     const loadJob = () => {
-      // Try to find job in current jobs list
-      let foundJob = jobs.find((job) => job.id === parseInt(jobId, 10));
+      // Ensure this code runs only on the client side
+      if (typeof window !== "undefined") {
+        let foundJob = jobs.find((job) => job.id === parseInt(jobId, 10));
 
-      if (!foundJob) {
-        // If not found, look in localStorage
-        const savedJobs = localStorage.getItem("jobs");
-        if (savedJobs) {
-          const jobsArray = JSON.parse(savedJobs);
-          foundJob = jobsArray.find((job) => job.id === parseInt(jobId, 10));
+        if (!foundJob) {
+          // If not found, look in localStorage
+          const savedJobs = localStorage.getItem("jobs");
+          if (savedJobs) {
+            const jobsArray = JSON.parse(savedJobs);
+            foundJob = jobsArray.find((job) => job.id === parseInt(jobId, 10));
+          }
         }
-      }
 
-      // Set job if found, otherwise set error state
-      if (foundJob) {
-        setJob(foundJob);
-      } else {
-        setError("Job not found!");
+        // Set job if found, otherwise set error state
+        if (foundJob) {
+          setJob(foundJob);
+        } else {
+          setError("Job not found!");
+        }
       }
     };
 
@@ -60,9 +62,9 @@ const JobDetail = ({ jobs, onBookmark }) => {
       : job?.primary_details?.Salary || "Not Available";
 
   return (
-    <div className="flex flex-col items-center justify-start gap-10 p-4 pt-10 lg:pt-20 pb-28 bg-gradient-to-r from-gray-100 to-gray-300 max-h-screen overflow-auto">
+    <div className="flex flex-col items-center justify-start gap-10 p-4 pt-10 lg:pt-20 pb-28 bg-gradient-to-r from-gray-100 to-gray-300 min-h-screen overflow-auto">
       <h1 className="text-3xl font-semibold">Job Details</h1>
-      <div className="bg-white lg:w-[50%] rounded-lg p-5 flex flex-col justify-start gap-3">
+      <div className="bg-white lg:w-[50%] rounded-lg p-5 flex flex-col justify-start gap-3 shadow-md">
         <h1 className="text-xl font-semibold py-4">{job.title}</h1>
         <p>{job.other_details}</p>
         <p className="font-semibold text-lg">
@@ -94,7 +96,7 @@ const JobDetail = ({ jobs, onBookmark }) => {
         {/* Button to bookmark job */}
         <button
           onClick={() => onBookmark(job)} // Call onBookmark with the job details
-          className="mt-4 bg-blue-500 text-white p-2 rounded"
+          className="mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-300"
         >
           Bookmark This Job
         </button>
