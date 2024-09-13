@@ -2,7 +2,7 @@ import React from "react";
 
 const BookmarksScreen = ({ bookmarkedJobs, onDelete }) => {
   return (
-    <div className="p-8 bg-gradient-to-r from-gray-100 to-gray-300 h-[100vh] overflow-auto lg:pb-24">
+    <div className="p-8 pb-24 bg-gradient-to-r from-gray-100 to-gray-300 h-[100vh] overflow-auto lg:pb-24">
       <h1 className="text-2xl font-bold mb-10">Bookmarked Jobs</h1>
       {bookmarkedJobs.length === 0 ? (
         <p>No bookmarked jobs found.</p>
@@ -36,7 +36,7 @@ const BookmarksScreen = ({ bookmarkedJobs, onDelete }) => {
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="size-6 sm:hidden"
+                className="size-4 sm:hidden"
               >
                 <path
                   strokeLinecap="round"

@@ -60,7 +60,7 @@ const JobDetail = ({ jobs, onBookmark }) => {
       : job?.primary_details?.Salary || "Not Available";
 
   return (
-    <div className="p-4 bg-gradient-to-r from-gray-100 to-gray-300 h-[120vh]  flex flex-col gap-10 justify-start lg:pt-20 pt-10 items-center">
+    <div className="flex flex-col items-center justify-start gap-10 p-4 pt-10 lg:pt-20 pb-28 bg-gradient-to-r from-gray-100 to-gray-300 max-h-screen overflow-auto">
       <h1 className="text-3xl font-semibold">Job Details</h1>
       <div className="bg-white lg:w-[50%] rounded-lg p-5 flex flex-col justify-start gap-3">
         <h1 className="text-xl font-semibold py-4">{job.title}</h1>

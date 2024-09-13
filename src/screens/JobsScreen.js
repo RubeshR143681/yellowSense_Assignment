@@ -89,7 +89,7 @@ const JobsScreen = ({ setJobs }) => {
   if (error) return <p>Error: {error}</p>; // Show error message
 
   return (
-    <div className="lg:pb-20 p-10 w-auto bg-gradient-to-r from-gray-100 to-gray-300">
+    <div className="pb-20  lg:p-10 p-5 w-auto bg-gradient-to-r from-gray-100 to-gray-300">
       <h1 className="text-2xl font-semibold pb-4">Jobs</h1>
 
       {/* Search Input */}
