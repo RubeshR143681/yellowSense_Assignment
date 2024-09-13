@@ -3,6 +3,7 @@ import Loader from "../components/Loader";
 import { fetchJobs } from "../services/jobService";
 import { useNavigate } from "react-router-dom";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { MdSearch } from "react-icons/md"; // Import the search icon
 
 // Component to display job listings
 const JobsScreen = ({ setJobs }) => {
@@ -10,6 +11,7 @@ const JobsScreen = ({ setJobs }) => {
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
   const [page, setPage] = useState(1); // Current page state
+  const [searchQuery, setSearchQuery] = useState(""); // Search query state
   const totalPages = 3; // Total number of pages
   const navigate = useNavigate(); // For navigation
 
@@ -77,6 +79,11 @@ const JobsScreen = ({ setJobs }) => {
     loadJobs(); // Load jobs on component mount and page change
   }, [page, setJobs]);
 
+  // Filter jobs based on the search query
+  const filteredJobs = jobs.filter((job) =>
+    job.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   // Show loader if fetching for the first page
   if (loading && page === 1) return <Loader />;
   if (error) return <p>Error: {error}</p>; // Show error message
@@ -85,10 +92,24 @@ const JobsScreen = ({ setJobs }) => {
     <div className="lg:pb-20 p-10 w-auto bg-gradient-to-r from-gray-100 to-gray-300">
       <h1 className="text-2xl font-semibold pb-4">Jobs</h1>
 
+      {/* Search Input */}
+      <div className="relative mb-4">
+        <MdSearch className="absolute left-3 top-3 text-gray-400 text-xl" />
+        <input
+          type="text"
+          placeholder="Search jobs..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10 pr-4 py-2 border border-gray-300 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm hover:shadow-md transition duration-200 ease-in-out"
+        />
+      </div>
+
       <div className="flex gap-3 flex-wrap">
-        {jobs.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))}
+        {filteredJobs.length > 0 ? (
+          filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
+        ) : (
+          <p>No jobs found for "{searchQuery}"</p>
+        )}
       </div>
 
       {/* Pagination Controls */}
